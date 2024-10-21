@@ -1,0 +1,15 @@
+#search-training-plans {
+  padding: 4rem;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+}
+
+#search-plans {
+  margin-bottom: 4rem;
+  width: 100%;
+}
+#card {
+  width: 200px;
+  height: 250px;
+}

@@ -1,0 +1,53 @@
+#mainpage-nav {
+  display: flex;
+  align-items: center;
+  gap: 2rem;
+}
+
+#main {
+  align-items: center;
+  justify-items: center;
+  padding: 4rem;
+}
+
+#actions-list {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  list-style-type: none;
+  gap: 3.2rem;
+}
+
+#actions-link:link,
+#actions-link:visited {
+  background-color: #636ae8ff;
+  color: #fff;
+  border: none;
+  font-weight: 500;
+  border-radius: 9px;
+  padding: 1rem 2rem;
+  text-decoration: none;
+}
+
+#btn-showall {
+  background-color: #636ae8ff;
+  color: #fff;
+  border: none;
+  font-weight: 500;
+  border-radius: 9px;
+  padding: 0.5rem 2rem;
+}
+
+#align {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+#card-fav {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 100px;
+  height: 150px;
+}

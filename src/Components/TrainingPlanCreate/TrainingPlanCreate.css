@@ -1,0 +1,67 @@
+#training-plan-main {
+  padding: 4rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+#header {
+  font-size: 1.4rem;
+  font-weight: 600;
+  margin-bottom: 2rem;
+}
+#exercise-list-list {
+  margin-right: auto;
+  width: 100%;
+  margin-bottom: 2rem;
+}
+
+#exercise-list-item {
+  margin-top: 2rem;
+  list-style-type: none;
+  width: 90%;
+}
+
+#exercise-list-item-sets {
+  display: inline;
+}
+
+#exercise-name {
+  font-size: 1.4rem;
+  font-weight: 600;
+}
+#exercise-set,
+#exercise-rep,
+#exercise-description {
+  font-size: 1rem;
+  color: #666;
+}
+
+#buttons {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: auto;
+  gap: 2rem;
+}
+
+#btn {
+  background-color: #636ae8ff;
+  color: #fff;
+  border: none;
+  font-weight: 500;
+  border-radius: 9px;
+  padding: 0.5rem 2rem;
+}
+
+ul {
+  list-style-type: none;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+li {
+  display: flex;
+  gap: 1rem;
+  align-items: center;
+}
