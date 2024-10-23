@@ -88,6 +88,7 @@ function AddLog({ setLogs, logs, user }) {
   const [exercise, setExercise] = useState("");
   const [currentWeight, setCurrentWeight] = useState("");
   const [repetitions, setRepetitions] = useState("");
+  const [isBodyweight, setIsBodyweight] = useState(false); // Nowe pole do zaznaczenia bodyweight
   const [exercises, setExercises] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
 
@@ -111,12 +112,15 @@ function AddLog({ setLogs, logs, user }) {
   const addOrUpdateLog = async () => {
     const existingLog = logs.find((log) => log.exercise === exercise);
 
-    const newVolumeLoad = parseFloat(currentWeight) * parseInt(repetitions);
+    const newVolumeLoad = isBodyweight
+      ? parseInt(repetitions)
+      : parseFloat(currentWeight) * parseInt(repetitions);
 
     if (existingLog) {
-      const previousVolumeLoad =
-        parseFloat(existingLog.currentWeight) *
-        parseInt(existingLog.repetitions);
+      const previousVolumeLoad = isBodyweight
+        ? parseInt(existingLog.repetitions)
+        : parseFloat(existingLog.currentWeight) *
+          parseInt(existingLog.repetitions);
 
       const increase = (
         ((newVolumeLoad - previousVolumeLoad) / previousVolumeLoad) *
@@ -125,8 +129,8 @@ function AddLog({ setLogs, logs, user }) {
 
       const updatedLog = {
         ...existingLog,
-        previousWeight: existingLog.currentWeight,
-        currentWeight: parseFloat(currentWeight),
+        previousWeight: isBodyweight ? 0 : existingLog.currentWeight,
+        currentWeight: isBodyweight ? "Bodyweight" : parseFloat(currentWeight),
         repetitions: parseInt(repetitions),
         increase,
         date: new Date().toLocaleDateString(),
@@ -141,7 +145,7 @@ function AddLog({ setLogs, logs, user }) {
         uid: user.uid,
         exercise,
         previousWeight: 0,
-        currentWeight: parseFloat(currentWeight),
+        currentWeight: isBodyweight ? "Bodyweight" : parseFloat(currentWeight),
         repetitions: parseInt(repetitions),
         increase: "100.00", // Przyrost dla pierwszego wpisu
         date: new Date().toLocaleDateString(),
@@ -161,6 +165,7 @@ function AddLog({ setLogs, logs, user }) {
     setExercise("");
     setCurrentWeight("");
     setRepetitions("");
+    setIsBodyweight(false); // Reset opcji bodyweight
   };
 
   return (
@@ -181,11 +186,24 @@ function AddLog({ setLogs, logs, user }) {
       </Form.Group>
       <Form.Group className="mb-2">
         <Form.Label>Obecny ciężar</Form.Label>
+        <Form.Check
+          type="radio"
+          label="Bodyweight"
+          checked={isBodyweight}
+          onChange={() => setIsBodyweight(true)}
+        />
+        <Form.Check
+          type="radio"
+          label="Wpisz ciężar"
+          checked={!isBodyweight}
+          onChange={() => setIsBodyweight(false)}
+        />
         <Form.Control
           type="number"
           value={currentWeight}
           onChange={(e) => setCurrentWeight(e.target.value)}
           placeholder="Obecny ciężar (kg)"
+          disabled={isBodyweight} // Zablokowanie pola, jeśli zaznaczone jest Bodyweight
         />
       </Form.Group>
       <Form.Group className="mb-4">

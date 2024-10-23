@@ -242,6 +242,35 @@ function EditExercise() {
     }
   };
 
+  // Funkcja do usuwania ćwiczeń
+  const handleDeleteExercise = async () => {
+    const confirmDelete = window.confirm(
+      "Czy na pewno chcesz usunąć to ćwiczenie?"
+    );
+    if (!confirmDelete) return;
+
+    try {
+      const exerciseRef = doc(db, "excercises", selectedExerciseId);
+      await deleteDoc(exerciseRef);
+      setExercises((prev) =>
+        prev.filter((exercise) => exercise.id !== selectedExerciseId)
+      );
+      setSelectedExerciseId(""); // Resetuj wybór
+      setExercise({
+        name: "",
+        description: "",
+        difficulty: "",
+        muscle_group: "",
+        img_url: "",
+      });
+
+      alert("Ćwiczenie zostało usunięte.");
+    } catch (error) {
+      console.error("Błąd podczas usuwania ćwiczenia:", error);
+      alert("Wystąpił błąd. Spróbuj ponownie.");
+    }
+  };
+
   return (
     <>
       <Container className="mt-5">
@@ -332,6 +361,15 @@ function EditExercise() {
 
             <Button variant="success" type="submit" disabled={loading}>
               {loading ? "Aktualizowanie..." : "Zaktualizuj ćwiczenie"}
+            </Button>
+
+            <Button
+              variant="danger"
+              className="ms-3"
+              onClick={handleDeleteExercise}
+              disabled={loading}
+            >
+              Usuń ćwiczenie
             </Button>
           </Form>
         )}
