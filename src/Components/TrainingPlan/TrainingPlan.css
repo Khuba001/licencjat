@@ -1,5 +1,5 @@
 #training-plan-main {
-  padding: 4rem;
+  padding: 0 4rem;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -9,16 +9,16 @@
 #header {
   font-size: 1.4rem;
   font-weight: 600;
-  margin-bottom: 2rem;
+  margin-bottom: 1rem;
 }
 #exercise-list-list {
   margin-right: auto;
   width: 100%;
-  margin-bottom: 2rem;
+  margin-bottom: 1rem;
 }
 
 #exercise-list-item {
-  margin-top: 2rem;
+  margin-top: 1rem;
   list-style-type: none;
   width: 80%;
 }
@@ -45,7 +45,6 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  margin-bottom: auto;
   gap: 2rem;
 }
 

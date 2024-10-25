@@ -6,6 +6,7 @@ import { Button } from "react-bootstrap";
 import NavBar from "../NavBar/NavBar";
 import { getAuth } from "firebase/auth"; // Importowanie Firebase Auth
 import "./TrainingPlan.css";
+import Footer from "../Footer/Footer";
 
 export default function TrainingPlan() {
   const { id } = useParams();
@@ -66,19 +67,22 @@ export default function TrainingPlan() {
   }
 
   return (
-    <div>
-      <NavBar />
-      <main id="training-plan-main">
-        <HeaderTrainingPlan title={plan.name} />
-        <ExerciseList exercises={plan.exercises} />
-        <PlanDescription description={plan.description} />
-      </main>
-      <Buttons
-        onEdit={() => navigate(`/edit-plan/${id}`)}
-        onDelete={deletePlan}
-        isAuthor={isAuthor}
-      />
-    </div>
+    <>
+      <div>
+        <NavBar />
+        <main id="training-plan-main">
+          <HeaderTrainingPlan title={plan.name} />
+          <ExerciseList exercises={plan.exercises} />
+          <PlanDescription description={plan.description} />
+        </main>
+        <Buttons
+          onEdit={() => navigate(`/edit-plan/${id}`)}
+          onDelete={deletePlan}
+          isAuthor={isAuthor}
+        />
+      </div>
+      <Footer />
+    </>
   );
 }
 
@@ -136,7 +140,7 @@ function ExerciseList({ exercises }) {
 // Komponent wyświetlający opis planu treningowego
 function PlanDescription({ description }) {
   return (
-    <div id="plan-description">
+    <div id="plan-description" className="mb-5">
       <h4>Opis planu</h4>
       <p>{description}</p>
     </div>
@@ -146,7 +150,7 @@ function PlanDescription({ description }) {
 // Komponent wyświetlający przyciski Edytuj, Usuń i Zamknij
 function Buttons({ onEdit, onDelete, isAuthor }) {
   return (
-    <div id="buttons">
+    <div id="buttons" className="mb-5">
       {isAuthor && (
         <>
           <Button id="btn" onClick={onEdit}>

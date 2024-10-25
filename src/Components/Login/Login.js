@@ -14,6 +14,7 @@ import { Navbar, NavbarBrand, NavLink, Nav } from "react-bootstrap";
 import { auth } from "../../config"; // Firebase Auth
 import { signInWithEmailAndPassword } from "firebase/auth"; // Logowanie Firebase
 import { useNavigate } from "react-router-dom";
+import Footer from "../Footer/Footer";
 
 export default function Login() {
   const [email, setEmail] = useState("");
@@ -39,50 +40,53 @@ export default function Login() {
   };
 
   return (
-    <div>
-      <NavBar />
-      <div id="login">
-        <h2>Witaj!</h2>
-        <p>Zaloguj się, aby skorzystać z aplikacji</p>
+    <>
+      <div>
+        <NavBar />
+        <div id="login">
+          <h2>Witaj!</h2>
+          <p>Zaloguj się, aby skorzystać z aplikacji</p>
 
-        {error && <Alert variant="danger">{error}</Alert>}
+          {error && <Alert variant="danger">{error}</Alert>}
 
-        <Form onSubmit={handleLogin}>
-          <Col xs={3}>
-            <FormGroup className="mb-3">
-              <FormControl
-                type="email"
-                placeholder="Email..."
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-                required
-              />
-            </FormGroup>
-            <FormGroup className="mb-3">
-              <FormControl
-                type="password"
-                placeholder="Hasło..."
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-                required
-              />
-            </FormGroup>
-            <Row id="align">
-              <Col>
-                <Button type="submit" id="btn" disabled={loading}>
-                  {loading ? "Logowanie..." : "Zaloguj się"}
-                </Button>
-              </Col>
-              <Col>
-                <NavLink href="/reset-password" id="login-forgot">
-                  Chcesz odzyskać hasło?
-                </NavLink>
-              </Col>
-            </Row>
-          </Col>
-        </Form>
+          <Form onSubmit={handleLogin}>
+            <Col xs={3}>
+              <FormGroup className="mb-3">
+                <FormControl
+                  type="email"
+                  placeholder="Email..."
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                  required
+                />
+              </FormGroup>
+              <FormGroup className="mb-3">
+                <FormControl
+                  type="password"
+                  placeholder="Hasło..."
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
+                  required
+                />
+              </FormGroup>
+              <div id="align">
+                <div>
+                  <Button type="submit" id="btn" disabled={loading}>
+                    {loading ? "Logowanie..." : "Zaloguj się"}
+                  </Button>
+                </div>
+                <Col>
+                  <NavLink href="/reset-password" id="login-forgot">
+                    Chcesz odzyskać hasło?
+                  </NavLink>
+                </Col>
+              </div>
+            </Col>
+          </Form>
+        </div>
       </div>
-    </div>
+      <Footer />
+    </>
   );
 }
 

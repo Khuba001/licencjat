@@ -13,13 +13,15 @@ import { useUser } from "../../UserContext"; // Import kontekstu użytkownika
 import { useEffect, useState } from "react";
 import { doc, getDoc, setDoc } from "firebase/firestore";
 import { db } from "../../config";
+import Footer from "../Footer/Footer";
 
 export default function Profile() {
   return (
-    <div>
+    <>
       <NavBar />
       <Main />
-    </div>
+      <Footer />
+    </>
   );
 }
 

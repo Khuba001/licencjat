@@ -4,6 +4,7 @@ import { addDoc, collection, getDocs, query, where } from "firebase/firestore";
 import { Button, Table, Form } from "react-bootstrap";
 import { onAuthStateChanged } from "firebase/auth";
 import NavBar from "../NavBar/NavBar";
+import Footer from "../Footer/Footer";
 
 export default function Progress() {
   const [logs, setLogs] = useState([]);
@@ -18,14 +19,15 @@ export default function Progress() {
   }, []);
 
   return (
-    <div>
+    <>
       <NavBar />
       {user ? (
         <Main logs={logs} setLogs={setLogs} user={user} />
       ) : (
         <p>Musisz się zalogować, aby zobaczyć swoje logi.</p>
       )}
-    </div>
+      <Footer />
+    </>
   );
 }
 

@@ -13,6 +13,7 @@ import {
 import { db } from "../../config";
 import { useParams, useNavigate } from "react-router-dom";
 import { getAuth } from "firebase/auth"; // Pobieranie aktualnego użytkownika
+import Footer from "../Footer/Footer";
 
 export default function TrainingPlanCreate() {
   const { id } = useParams();
@@ -87,18 +88,21 @@ export default function TrainingPlanCreate() {
   };
 
   return (
-    <div>
-      <NavBar />
-      <Main
-        planName={planName}
-        setPlanName={setPlanName}
-        planDescription={planDescription}
-        setPlanDescription={setPlanDescription}
-        selectedExercises={selectedExercises}
-        setSelectedExercises={setSelectedExercises}
-      />
-      <Buttons onSavePlan={handleSavePlan} />
-    </div>
+    <>
+      <div>
+        <NavBar />
+        <Main
+          planName={planName}
+          setPlanName={setPlanName}
+          planDescription={planDescription}
+          setPlanDescription={setPlanDescription}
+          selectedExercises={selectedExercises}
+          setSelectedExercises={setSelectedExercises}
+        />
+        <Buttons onSavePlan={handleSavePlan} />
+      </div>
+      <Footer />
+    </>
   );
 }
 function Main({

@@ -15,6 +15,7 @@ import {
   Row,
 } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
+import Footer from "../Footer/Footer";
 
 export default function Register() {
   const [email, setEmail] = useState("");
@@ -58,52 +59,55 @@ export default function Register() {
   };
 
   return (
-    <div className="register">
-      <NavBar navigate={navigate} />
-      <div id="register">
-        <h2 className="mb-3">Utwórz nowe konto</h2>
+    <>
+      <div className="register">
+        <NavBar navigate={navigate} />
+        <div id="register">
+          <h2 className="mb-3">Utwórz nowe konto</h2>
 
-        <Form onSubmit={handleRegister}>
-          <Col xs={3}>
-            <FormGroup className="mb-3">
-              <FormControl
-                type="email"
-                placeholder="Email..."
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-                required
-              />
-            </FormGroup>
-            <FormGroup className="mb-3">
-              <FormControl
-                type="text"
-                placeholder="Nazwa użytkownika..."
-                value={name}
-                onChange={(e) => setName(e.target.value)}
-                required
-              />
-            </FormGroup>
-            <FormGroup className="mb-3">
-              <FormControl
-                type="password"
-                placeholder="Hasło..."
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-                required
-              />
-            </FormGroup>
-            {error && <p style={{ color: "red" }}>{error}</p>}
-            <Row id="align">
-              <Col>
-                <Button id="btn" type="submit">
-                  Zarejestruj się
-                </Button>
-              </Col>
-            </Row>
-          </Col>
-        </Form>
+          <Form onSubmit={handleRegister}>
+            <Col xs={3}>
+              <FormGroup className="mb-3">
+                <FormControl
+                  type="email"
+                  placeholder="Email..."
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                  required
+                />
+              </FormGroup>
+              <FormGroup className="mb-3">
+                <FormControl
+                  type="text"
+                  placeholder="Nazwa użytkownika..."
+                  value={name}
+                  onChange={(e) => setName(e.target.value)}
+                  required
+                />
+              </FormGroup>
+              <FormGroup className="mb-3">
+                <FormControl
+                  type="password"
+                  placeholder="Hasło..."
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
+                  required
+                />
+              </FormGroup>
+              {error && <p style={{ color: "red" }}>{error}</p>}
+              <Row id="align">
+                <Col>
+                  <Button id="btn" type="submit">
+                    Zarejestruj się
+                  </Button>
+                </Col>
+              </Row>
+            </Col>
+          </Form>
+        </div>
       </div>
-    </div>
+      <Footer />
+    </>
   );
 }
 

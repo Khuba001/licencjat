@@ -23,10 +23,13 @@
 #register {
   padding: 4rem;
 }
-
-#align {
+#form {
   display: flex;
-  align-items: center;
+  gap: 2rem;
+}
+#align {
+  margin-top: 10px;
+  gap: 2rem;
 }
 
 #btn {

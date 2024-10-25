@@ -14,13 +14,15 @@ import {
 import { useAuthState } from "react-firebase-hooks/auth";
 import "./SearchTrainingPlans.css";
 import NavBar from "../NavBar/NavBar";
+import Footer from "../Footer/Footer";
 
 export default function SearchTrainingPlans() {
   return (
-    <div>
+    <>
       <NavBar />
       <Main />
-    </div>
+      <Footer />
+    </>
   );
 }
 

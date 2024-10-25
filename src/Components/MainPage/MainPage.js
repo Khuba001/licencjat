@@ -6,15 +6,17 @@ import { getDoc, doc } from "firebase/firestore";
 import { db } from "../../config"; // Firebase config
 import "./MainPage.css";
 import NavBar from "../NavBar/NavBar";
+import Footer from "../Footer/Footer.js";
 
 export default function MainPage() {
   const user = useUser();
 
   return (
-    <div>
+    <>
       <NavBar />
       <Main user={user} />
-    </div>
+      <Footer />
+    </>
   );
 }
 
