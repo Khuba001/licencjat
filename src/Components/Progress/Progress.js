@@ -36,7 +36,7 @@ function Main({ logs, setLogs, user }) {
     if (user) {
       fetchLogs(user.uid, setLogs);
     }
-  }, [user]);
+  }, [user, setLogs]);
 
   return (
     <div id="main">
@@ -101,6 +101,7 @@ function AddLog({ setLogs, logs, user }) {
         id: doc.id,
         ...doc.data(),
       }));
+      if (!exercisesData) return;
       setExercises(exercisesData);
     };
 
