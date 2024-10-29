@@ -1,7 +1,15 @@
 import { useState, useEffect } from "react";
 import { auth, db } from "../../config";
-import { addDoc, collection, getDocs, query, where } from "firebase/firestore";
-import { Button, Table, Form } from "react-bootstrap";
+import {
+  addDoc,
+  collection,
+  getDocs,
+  query,
+  where,
+  updateDoc,
+  doc,
+} from "firebase/firestore";
+import { Button, Table, Form, Alert } from "react-bootstrap";
 import { onAuthStateChanged } from "firebase/auth";
 import NavBar from "../NavBar/NavBar";
 import Footer from "../Footer/Footer";
@@ -90,9 +98,10 @@ function AddLog({ setLogs, logs, user }) {
   const [exercise, setExercise] = useState("");
   const [currentWeight, setCurrentWeight] = useState("");
   const [repetitions, setRepetitions] = useState("");
-  const [isBodyweight, setIsBodyweight] = useState(false); // Nowe pole do zaznaczenia bodyweight
+  const [isBodyweight, setIsBodyweight] = useState(false);
   const [exercises, setExercises] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
+  const [error, setError] = useState("");
 
   useEffect(() => {
     const fetchExercises = async () => {
@@ -113,6 +122,13 @@ function AddLog({ setLogs, logs, user }) {
   );
 
   const addOrUpdateLog = async () => {
+    if (!exercise || !repetitions || (!isBodyweight && !currentWeight)) {
+      setError("Wszystkie pola muszą być uzupełnione.");
+      return;
+    }
+
+    setError(""); // Resetuje komunikat o błędzie, jeśli wszystkie pola są wypełnione
+
     const existingLog = logs.find((log) => log.exercise === exercise);
 
     const newVolumeLoad = isBodyweight
@@ -139,10 +155,17 @@ function AddLog({ setLogs, logs, user }) {
         date: new Date().toLocaleDateString(),
       };
 
-      setLogs((prevLogs) =>
-        prevLogs.map((log) => (log.exercise === exercise ? updatedLog : log))
-      );
-      resetForm();
+      try {
+        const logDoc = doc(db, "progress", existingLog.id);
+        await updateDoc(logDoc, updatedLog);
+
+        setLogs((prevLogs) =>
+          prevLogs.map((log) => (log.exercise === exercise ? updatedLog : log))
+        );
+        resetForm();
+      } catch (error) {
+        console.error("Błąd przy aktualizowaniu logu: ", error.message);
+      }
     } else {
       const newLog = {
         uid: user.uid,
@@ -150,7 +173,7 @@ function AddLog({ setLogs, logs, user }) {
         previousWeight: 0,
         currentWeight: isBodyweight ? "Bodyweight" : parseFloat(currentWeight),
         repetitions: parseInt(repetitions),
-        increase: "100.00", // Przyrost dla pierwszego wpisu
+        increase: "100.00",
         date: new Date().toLocaleDateString(),
       };
 
@@ -168,11 +191,12 @@ function AddLog({ setLogs, logs, user }) {
     setExercise("");
     setCurrentWeight("");
     setRepetitions("");
-    setIsBodyweight(false); // Reset opcji bodyweight
+    setIsBodyweight(false);
   };
 
   return (
     <Form>
+      {error && <Alert variant="danger">{error}</Alert>}
       <Form.Group>
         <Form.Label>Wybierz ćwiczenie</Form.Label>
         <Form.Select
@@ -206,7 +230,7 @@ function AddLog({ setLogs, logs, user }) {
           value={currentWeight}
           onChange={(e) => setCurrentWeight(e.target.value)}
           placeholder="Obecny ciężar (kg)"
-          disabled={isBodyweight} // Zablokowanie pola, jeśli zaznaczone jest Bodyweight
+          disabled={isBodyweight}
         />
       </Form.Group>
       <Form.Group className="mb-4">
