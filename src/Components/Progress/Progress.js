@@ -7,6 +7,7 @@ import {
   query,
   where,
   updateDoc,
+  deleteDoc,
   doc,
 } from "firebase/firestore";
 import { Button, Table, Form, Alert } from "react-bootstrap";
@@ -49,7 +50,7 @@ function Main({ logs, setLogs, user }) {
   return (
     <div id="main">
       <Heading />
-      <LogTable logs={logs} />
+      <LogTable logs={logs} setLogs={setLogs} />
       <AddLog setLogs={setLogs} logs={logs} user={user} />
     </div>
   );
@@ -59,7 +60,18 @@ function Heading() {
   return <h3>Progresja treningów</h3>;
 }
 
-function LogTable({ logs }) {
+function LogTable({ logs, setLogs }) {
+  const deleteLog = async (logId) => {
+    try {
+      const logDoc = doc(db, "progress", logId);
+      await deleteDoc(logDoc);
+
+      setLogs((prevLogs) => prevLogs.filter((log) => log.id !== logId));
+    } catch (error) {
+      console.error("Błąd przy usuwaniu logu: ", error.message);
+    }
+  };
+
   return (
     <Table striped bordered hover>
       <thead>
@@ -70,23 +82,29 @@ function LogTable({ logs }) {
           <th>Liczba powtórzeń</th>
           <th>Wzrost (%)</th>
           <th>Data</th>
+          <th>Usuń</th>
         </tr>
       </thead>
       <tbody>
         {logs.length > 0 ? (
-          logs.map((log, index) => (
-            <tr key={index}>
+          logs.map((log) => (
+            <tr key={log.id}>
               <td>{log.exercise}</td>
               <td>{log.previousWeight}</td>
               <td>{log.currentWeight}</td>
               <td>{log.repetitions}</td>
               <td>{log.increase}%</td>
               <td>{log.date}</td>
+              <td>
+                <Button variant="danger" onClick={() => deleteLog(log.id)}>
+                  Usuń
+                </Button>
+              </td>
             </tr>
           ))
         ) : (
           <tr>
-            <td colSpan="6">Brak logów do wyświetlenia</td>
+            <td colSpan="7">Brak logów do wyświetlenia</td>
           </tr>
         )}
       </tbody>
